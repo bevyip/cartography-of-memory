@@ -1,0 +1,374 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Manrope", sans-serif;
+  background-color: #f5f5f5;
+  overflow: hidden;
+}
+
+/* Intro overlay styles */
+#intro-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#clouds-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+#cloud-emoji-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+#cloud-emoji {
+  font-size: 4rem;
+  cursor: pointer;
+  animation: gentleBounce 2s ease-in-out infinite;
+  transition: transform 0.3s ease;
+}
+
+#cloud-emoji:hover {
+  transform: scale(1.1);
+}
+
+#cloud-emoji.shrink {
+  animation: shrinkAndDisappear 0.8s ease-in-out forwards;
+}
+
+@keyframes shrinkAndDisappear {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes gentleBounce {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+#intro-content {
+  text-align: center;
+  color: white;
+  z-index: 1;
+  max-width: 600px;
+  padding: 20px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+#intro-content.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#intro-text {
+  margin-bottom: 40px;
+}
+
+.thought-line {
+  font-size: 1.4rem;
+  line-height: 1.6;
+  margin: 20px 0;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInThought 1.2s ease-out forwards;
+  font-weight: 300;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  cursor: default;
+  color: #e6e6e6;
+}
+
+.thought-line:nth-child(1) {
+  animation-delay: 1.5s;
+}
+.thought-line:nth-child(2) {
+  animation-delay: 2.8s;
+}
+.thought-line:nth-child(3) {
+  animation-delay: 4.1s;
+}
+.thought-line:nth-child(4) {
+  animation-delay: 5.4s;
+}
+.thought-line:nth-child(5) {
+  animation-delay: 6.7s;
+  color: #fff;
+  font-weight: bold;
+}
+
+@keyframes fadeInThought {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#enter-site {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  font-family: "Manrope", sans-serif;
+  font-weight: 400;
+  border-radius: 50px;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: fadeInButton 0.8s ease-out 8.2s forwards;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+#enter-site:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.8);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes fadeInButton {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Fade out animation for intro */
+#intro-overlay.fade-out {
+  opacity: 0;
+  transition: opacity 1.5s ease-out;
+}
+
+/* Memory overlay styles */
+#memory-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+#memory-overlay.show {
+  opacity: 1;
+}
+
+#memory-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+}
+
+#memory-clouds-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+#memory-content {
+  position: relative;
+  z-index: 1;
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 0;
+  overflow: hidden;
+  transform: scale(0.9);
+  transition: transform 0.8s ease-out;
+  display: flex;
+  flex-direction: row;
+}
+
+#memory-overlay.show #memory-content {
+  transform: scale(1);
+}
+
+#memory-image-container {
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f9fa;
+}
+
+#memory-image {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: sepia(20%) contrast(1.1) brightness(1.05);
+  transition: opacity 0.3s ease;
+}
+
+#memory-text-container {
+  width: 50%;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.9);
+  position: relative;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#memory-title {
+  font-family: "Manrope", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0 0 20px 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+#memory-description {
+  font-family: "Manrope", sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #34495e;
+  margin: 0;
+  white-space: pre-line;
+  cursor: default;
+}
+
+#close-memory {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#close-memory:hover {
+  background: rgba(255, 255, 255, 1);
+  color: #333;
+  transform: scale(1.1);
+}
+
+/* Carousel button styles */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.carousel-btn:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: translateY(-50%);
+}
+
+#prev-image {
+  left: 15px;
+}
+
+#next-image {
+  right: 15px;
+}
+
+#map-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+/* Heartbeat connecting line styles */
+.memory-path {
+  stroke: rgba(192, 57, 43, 0.6);
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: blur(0.5px);
+  animation: heartbeat 2s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
