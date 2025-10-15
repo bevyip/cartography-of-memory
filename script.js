@@ -93,6 +93,43 @@ function fadeAudio(audioElement, targetVolume, duration) {
   updateVolume();
 }
 
+// Helper function to clear typewriter animations
+function clearTypewriterAnimation(element) {
+  if (element.typewriterTimer) {
+    clearInterval(element.typewriterTimer);
+    element.typewriterTimer = null;
+  }
+  if (element.typewriterCursorTimer) {
+    clearTimeout(element.typewriterCursorTimer);
+    element.typewriterCursorTimer = null;
+  }
+}
+
+// Typewriter animation function
+function typewriterEffect(element, text, speed = 30) {
+  // Clear any existing content and timer
+  element.innerHTML = "";
+  clearTypewriterAnimation(element);
+
+  let i = 0;
+  element.typewriterTimer = setInterval(() => {
+    if (i < text.length) {
+      // Add the next character
+      element.innerHTML += text.charAt(i);
+      i++;
+    } else {
+      // Animation complete
+      clearInterval(element.typewriterTimer);
+      element.typewriterTimer = null;
+      // Remove the blinking cursor after a delay
+      element.typewriterCursorTimer = setTimeout(() => {
+        element.classList.remove("typewriter-text");
+        element.typewriterCursorTimer = null;
+      }, 2000);
+    }
+  }, speed);
+}
+
 // Initialize the intro experience
 function initIntro() {
   const cloudEmoji = document.getElementById("cloud-emoji");
@@ -354,7 +391,14 @@ function showMemoryOverlay(location) {
 
   // Set the content based on location
   title.textContent = location.name;
-  description.textContent = location.description;
+
+  // Add typewriter class and start animation
+  description.className = "typewriter-text";
+
+  // Start typewriter effect after a short delay
+  setTimeout(() => {
+    typewriterEffect(description, location.description, 25);
+  }, 500);
 
   // Set image source based on location name
   const imagePath = getImagePath(location.name);
@@ -438,10 +482,18 @@ function hideMemoryOverlay() {
   const overlay = document.getElementById("memory-overlay");
   const audio = document.getElementById("memory-audio");
   const backgroundAudio = document.getElementById("background-audio");
+  const description = document.getElementById("memory-description");
 
   // Stop memory audio
   audio.pause();
   audio.currentTime = 0;
+
+  // Clear any ongoing typewriter animation
+  clearTypewriterAnimation(description);
+
+  // Reset description element
+  description.innerHTML = "";
+  description.className = "";
 
   // Fade background audio back in
   fadeAudio(backgroundAudio, 0.3, 1000);
